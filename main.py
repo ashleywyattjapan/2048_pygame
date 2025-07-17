@@ -26,7 +26,7 @@ pygame.display.set_caption("2048")
 
 class Tile: 
     #more colors to support higher tile values 
-    COLORS = (
+    COLORS = [
         (237, 229, 218),
         (238, 225, 201),
         (243, 178, 122),
@@ -36,7 +36,7 @@ class Tile:
         (237, 208, 115),
         (237, 204, 99),
         (236, 202, 80),
-    )
+    ]
     def __init__(self, value, row, col):
         self.value = value 
         self.row = row
@@ -45,16 +45,18 @@ class Tile:
         self.y = row * RECT_HEIGHT 
 
     def get_color(self):
-        """"Calculates the color of the tile based on its value. """
+        #Calculates the color of the tile based on its value. 
         color_index = int(math.log2(self.value)) - 1
         #to prevent indexerror for high numbers use last color 
-        if color_index >= len(self.COLORS):
-            return self.COLORS[-1]
+        color = self.COLORS[color_index]
+        return color
+        #if color_index >= len(self.COLORS):
+           # return self.COLORS[-1]
         
-        return self.COLORS[color_index]
+        #return self.COLORS[color_index]
 
     def draw(self, window): 
-        """Draws the tile on the game window"""
+        #Draws the tile on the game window
         color = self.get_color()
         pygame.draw.rect(window, color, (self.x, self.y, RECT_WIDTH, RECT_HEIGHT))
         # render the text (the tiles value)
@@ -62,8 +64,9 @@ class Tile:
         #center the text w/in the tile 
         window.blit(
             text,
-             (self.x + (RECT_WIDTH /2 - text.get_width() / 2), 
-              self.y + (RECT_HEIGHT / 2 - text.get_height() / 2),
+             (
+                self.x + (RECT_WIDTH /2 - text.get_width() / 2), 
+                self.y + (RECT_HEIGHT / 2 - text.get_height() / 2),
               ), 
             )
 
